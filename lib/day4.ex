@@ -34,10 +34,8 @@ defmodule Aoc.Day4 do
     |> Enum.filter(fn passport_map -> compulsory_keys_present?(passport_map) end)
   end
 
-  defp compulsory_keys_present?(passport_map) do
-    compulsory_keys()
-    |> Enum.all?(fn key -> passport_map |> Map.has_key?(key) end)
-  end
+  defp compulsory_keys_present?(%{"byr" => _, "iyr" => _, "eyr" => _, "hgt" => _, "hcl" => _, "ecl" => _, "pid" => _} = _passport_details), do: true
+  defp compulsory_keys_present?(_passport_details), do: false
 
   defp byr_valid?(byr), do: String.length(byr) === 4 && String.to_integer(byr) >= 1920 && String.to_integer(byr) <= 2002
 
@@ -76,5 +74,4 @@ defmodule Aoc.Day4 do
       pid |> String.to_charlist() |> Enum.all?(fn x -> x >= '0' |> hd && x <= '9' |> hd end)
   end
 
-  defp compulsory_keys, do: ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
 end
